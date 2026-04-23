@@ -17,7 +17,7 @@ export function DrawPage() {
     const letter = captureLetterImage(canvas);
     if (letter) dispatch({ type: 'SAVE_LETTER', payload: letter });
     clearCanvas(canvas);
-  }, [state.darkMode, dispatch]);
+  }, [dispatch]);
 
   const { trigger: triggerDebounce, cancel: cancelDebounce } = useDebounce(
     saveAndClear,
@@ -62,16 +62,20 @@ export function DrawPage() {
           className="absolute left-0 right-0 pointer-events-none"
           style={{ top: `${BASELINE_FRACTION * 100}%` }}
         >
-          <div className={`border-t border-dashed ${
-            state.darkMode ? 'border-gray-500' : 'border-gray-300'
-          }`} />
+          <div
+            className={`border-t border-dashed ${
+              state.darkMode ? 'border-gray-500' : 'border-gray-300'
+            }`}
+          />
         </div>
       </div>
 
-      <ControlBar buttons={[
-        { label: 'Space',   onClick: handleSpace,   variant: 'primary'  },
-        { label: 'Results', onClick: handleResults, variant: 'confirm'  },
-      ]} />
+      <ControlBar
+        buttons={[
+          { label: 'Space', onClick: handleSpace, variant: 'primary' },
+          { label: 'Results', onClick: handleResults, variant: 'confirm' },
+        ]}
+      />
     </div>
   );
 }

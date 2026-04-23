@@ -4,11 +4,13 @@ export function NavBar() {
   const { state, dispatch } = useApp();
 
   return (
-    <nav className={`flex items-center justify-between px-4 py-3 border-b shrink-0 ${
-      state.darkMode
-        ? 'bg-gray-900 border-gray-500 text-gray-400'
-        : 'bg-amber-50 border-gray-800 text-gray-900'
-    }`}>
+    <nav
+      className={`flex items-center justify-between px-4 py-3 border-b shrink-0 ${
+        state.darkMode
+          ? 'bg-gray-900 border-gray-500 text-gray-400'
+          : 'bg-amber-50 border-gray-800 text-gray-900'
+      }`}
+    >
       <div className="flex items-center gap-2">
         <a
           href="https://ko-fi.com/chrisvomrhein"
@@ -39,9 +41,7 @@ export function NavBar() {
         >
           <span
             className={`absolute top-0.5 h-6 w-6 rounded-full shadow transition-transform ${
-              state.darkMode
-                ? 'translate-x-5 bg-gray-400'
-                : 'translate-x-0.5 bg-white'
+              state.darkMode ? 'translate-x-5 bg-gray-400' : 'translate-x-0.5 bg-white'
             }`}
           />
           <span className="sr-only">{state.darkMode ? 'Dark mode on' : 'Light mode on'}</span>

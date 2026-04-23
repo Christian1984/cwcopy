@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type CSSProperties, useState } from 'react';
 import { useApp } from '../state/AppContext';
 import { WordRow } from './WordRow';
 import { ControlBar } from './ControlBar';
@@ -21,20 +21,20 @@ export function ResultsPage() {
     dispatch({ type: 'NAVIGATE_DRAW' });
   };
 
-  const bg        = state.darkMode ? 'bg-gray-900'    : 'bg-amber-50';
-  const border    = state.darkMode ? 'border-gray-500' : 'border-gray-800';
-  const labelText = state.darkMode ? 'text-gray-400'   : 'text-gray-500';
+  const bg = state.darkMode ? 'bg-gray-900' : 'bg-amber-50';
+  const border = state.darkMode ? 'border-gray-500' : 'border-gray-800';
+  const labelText = state.darkMode ? 'text-gray-400' : 'text-gray-500';
 
   // Slider colours — passed as CSS custom properties so the passive track
   // section (right of thumb) can be styled separately from the active fill.
-  const sliderThumb   = state.darkMode ? '#9ca3af' : '#2563eb';
+  const sliderThumb = state.darkMode ? '#9ca3af' : '#2563eb';
   const sliderPassive = state.darkMode ? '#374151' : '#e5e7eb';
-  const sliderFill    = ((zoom - ZOOM_MIN) / (ZOOM_MAX - ZOOM_MIN)) * 100;
+  const sliderFill = ((zoom - ZOOM_MIN) / (ZOOM_MAX - ZOOM_MIN)) * 100;
   const sliderStyle = {
     background: `linear-gradient(to right, ${sliderThumb} ${sliderFill}%, ${sliderPassive} ${sliderFill}%)`,
-    '--slider-thumb':   sliderThumb,
+    '--slider-thumb': sliderThumb,
     '--slider-passive': sliderPassive,
-  } as React.CSSProperties;
+  } as CSSProperties;
 
   return (
     <div className={`flex-1 flex flex-col min-h-0 ${bg}`}>
@@ -74,10 +74,12 @@ export function ResultsPage() {
       </div>
 
       {/* Buttons — fixed at bottom */}
-      <ControlBar buttons={[
-        { label: 'Back',  onClick: handleBack,  variant: 'secondary' },
-        { label: 'Clear', onClick: handleClear, variant: 'danger'    },
-      ]} />
+      <ControlBar
+        buttons={[
+          { label: 'Back', onClick: handleBack, variant: 'secondary' },
+          { label: 'Clear', onClick: handleClear, variant: 'danger' },
+        ]}
+      />
     </div>
   );
 }

@@ -21,9 +21,11 @@ export function ResumeDialog() {
       aria-labelledby="resume-dialog-title"
       className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50"
     >
-      <div className={`mx-4 w-full max-w-sm rounded-2xl p-6 shadow-2xl ${
-        state.darkMode ? 'bg-gray-900 text-gray-400' : 'bg-white text-gray-900'
-      }`}>
+      <div
+        className={`mx-4 w-full max-w-sm rounded-2xl p-6 shadow-2xl ${
+          state.darkMode ? 'bg-gray-900 text-gray-400' : 'bg-white text-gray-900'
+        }`}
+      >
         <h2 id="resume-dialog-title" className="text-lg font-semibold mb-2">
           Resume session?
         </h2>

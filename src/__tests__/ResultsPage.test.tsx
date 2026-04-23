@@ -15,7 +15,7 @@ const letter = (id: string, pxHeight = 60, baselineOffset?: number): LetterImage
 
 const word = (id: string, letterIds: string[]): Word => ({
   id,
-  letters: letterIds.map(id => letter(id)),
+  letters: letterIds.map((id) => letter(id)),
 });
 
 function renderResultsPage(words: Word[] = []) {
@@ -91,8 +91,8 @@ describe('ResultsPage', () => {
   it('baseline-aligns letters via marginTop', () => {
     // tall: pxHeight=80, baselineOffset=50  → aboveBaseline(display)=50, topOffset=0
     // short: pxHeight=40, baselineOffset=20 → aboveBaseline(display)=20, topOffset=30
-    const tall   = letter('tall',  80, 50);
-    const short  = letter('short', 40, 20);
+    const tall = letter('tall', 80, 50);
+    const short = letter('short', 40, 20);
     const w = { id: 'w1', letters: [tall, short] };
     renderResultsPage([w]);
     const [imgTall, imgShort] = screen.getAllByRole('img');

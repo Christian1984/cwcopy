@@ -46,9 +46,7 @@ describe('DrawPage', () => {
   it('dispatches NAVIGATE_RESULTS when Results is clicked', () => {
     const { dispatch } = renderDrawPage();
     fireEvent.click(screen.getByRole('button', { name: /results/i }));
-    expect(dispatch).toHaveBeenCalledWith(
-      expect.objectContaining({ type: 'NAVIGATE_RESULTS' }),
-    );
+    expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'NAVIGATE_RESULTS' }));
   });
 
   it('does not fire the debounce before the delay elapses', () => {
@@ -59,9 +57,7 @@ describe('DrawPage', () => {
     fireEvent.pointerUp(canvas, { clientX: 10, clientY: 10 });
 
     act(() => jest.advanceTimersByTime(499));
-    expect(dispatch).not.toHaveBeenCalledWith(
-      expect.objectContaining({ type: 'SAVE_LETTER' }),
-    );
+    expect(dispatch).not.toHaveBeenCalledWith(expect.objectContaining({ type: 'SAVE_LETTER' }));
   });
 
   it('resets the debounce when the pointer goes down again before the delay', () => {
@@ -78,9 +74,7 @@ describe('DrawPage', () => {
 
     // 300 ms more: would have fired if not reset, but should not
     act(() => jest.advanceTimersByTime(300));
-    expect(dispatch).not.toHaveBeenCalledWith(
-      expect.objectContaining({ type: 'SAVE_LETTER' }),
-    );
+    expect(dispatch).not.toHaveBeenCalledWith(expect.objectContaining({ type: 'SAVE_LETTER' }));
   });
 
   it('Space button is keyboard-accessible', () => {

@@ -8,9 +8,5 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
   testMatch: ['<rootDir>/src/__tests__/**/*.test.{ts,tsx}'],
-  collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    '!src/main.tsx',
-    '!src/**/*.d.ts',
-  ],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/main.tsx', '!src/**/*.d.ts'],
 };

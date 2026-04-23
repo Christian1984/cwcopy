@@ -11,7 +11,7 @@ describe('getBoundingBox', () => {
     const data = new Uint8ClampedArray(width * height * 4);
     for (const { x, y } of pixels) {
       const i = (y * width + x) * 4;
-      data[i] = 255;     // R
+      data[i] = 255; // R
       data[i + 1] = 255; // G
       data[i + 2] = 255; // B
       data[i + 3] = 255; // A (fully opaque)
@@ -56,7 +56,9 @@ describe('clearCanvas', () => {
     canvas.width = 300;
     canvas.height = 600;
     clearCanvas(canvas);
-    const ctx = (globalThis as Record<string, unknown>).mockCanvasContext as { clearRect: jest.Mock };
+    const ctx = (globalThis as Record<string, unknown>).mockCanvasContext as {
+      clearRect: jest.Mock;
+    };
     expect(ctx.clearRect).toHaveBeenCalledWith(0, 0, 300, 600);
   });
 
@@ -91,7 +93,10 @@ describe('captureLetterImage', () => {
     // Provide pixel data with a non-transparent pixel
     const data = new Uint8ClampedArray(300 * 600 * 4);
     const i = (10 * 300 + 10) * 4;
-    data[i] = 255; data[i + 1] = 255; data[i + 2] = 255; data[i + 3] = 255;
+    data[i] = 255;
+    data[i + 1] = 255;
+    data[i + 2] = 255;
+    data[i + 3] = 255;
 
     const ctx = (globalThis as Record<string, unknown>).mockCanvasContext as {
       getImageData: jest.Mock;
@@ -123,7 +128,10 @@ describe('captureLetterImage', () => {
 
     const data = new Uint8ClampedArray(300 * 600 * 4);
     const i = (10 * 300 + 10) * 4;
-    data[i] = 255; data[i + 1] = 255; data[i + 2] = 255; data[i + 3] = 255;
+    data[i] = 255;
+    data[i + 1] = 255;
+    data[i + 2] = 255;
+    data[i + 3] = 255;
 
     const ctx = (globalThis as Record<string, unknown>).mockCanvasContext as {
       getImageData: jest.Mock;

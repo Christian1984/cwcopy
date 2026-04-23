@@ -8,9 +8,11 @@ export function App() {
   const { state } = useApp();
 
   return (
-    <div className={`flex flex-col h-screen overflow-hidden ${
-      state.darkMode ? 'bg-gray-900 text-gray-400' : 'bg-amber-50 text-gray-900'
-    }`}>
+    <div
+      className={`flex flex-col h-screen overflow-hidden ${
+        state.darkMode ? 'bg-gray-900 text-gray-400' : 'bg-amber-50 text-gray-900'
+      }`}
+    >
       <NavBar />
 
       {/* flex-1 + overflow-hidden so DrawPage can own its own scroll/no-scroll */}

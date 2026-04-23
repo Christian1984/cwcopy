@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useReducer,
-  useEffect,
-  type ReactNode,
-} from 'react';
+import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import { reducer, initialState } from './reducer';
 import type { AppState } from './types';
 import type { Action } from './actions';
@@ -35,11 +29,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     saveSession({ currentLetters: state.currentLetters, words: state.words });
   }, [state.currentLetters, state.words]);
 
-  return (
-    <AppContext.Provider value={{ state, dispatch }}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>;
 }
 
 export function useApp(): AppContextValue {

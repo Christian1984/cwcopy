@@ -19,9 +19,7 @@ export function LetterImage({ letter, displayH, topOffset }: Props) {
   // Light mode: render strokes as near-black.
   // Dark mode: render strokes as medium gray (brightness(0) → black,
   //   invert(1) → white, brightness(0.65) → ~65% white ≈ gray-400).
-  const filter = state.darkMode
-    ? 'brightness(0) invert(1) brightness(0.65)'
-    : 'brightness(0)';
+  const filter = state.darkMode ? 'brightness(0) invert(1) brightness(0.65)' : 'brightness(0)';
 
   return (
     <img
