@@ -6,3 +6,55 @@ body {
   overscroll-behavior: none;
   touch-action: pan-x pan-y;
 }
+
+/* ── Range slider ─────────────────────────────────────────────────────────────
+   Removes native appearance so we can colour the passive track separately.
+   Active / passive colours and the split position are passed via inline CSS
+   custom properties set by ResultsPage. */
+input[type='range'].styled-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  cursor: pointer;
+  outline: none;
+  /* background (active/passive gradient) is set via inline style in React */
+}
+
+/* Thumb — WebKit (Chrome, Edge, Safari) */
+input[type='range'].styled-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--slider-thumb, #2563eb);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.4);
+  transition: transform 0.1s;
+}
+input[type='range'].styled-range:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+/* Track + progress — Firefox */
+input[type='range'].styled-range::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--slider-passive, #e5e7eb);
+}
+input[type='range'].styled-range::-moz-range-progress {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--slider-thumb, #2563eb);
+}
+
+/* Thumb — Firefox */
+input[type='range'].styled-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--slider-thumb, #2563eb);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.4);
+}

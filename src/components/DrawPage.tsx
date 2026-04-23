@@ -63,7 +63,7 @@ export function DrawPage() {
           style={{ top: `${BASELINE_FRACTION * 100}%` }}
         >
           <div className={`border-t border-dashed ${
-            state.darkMode ? 'border-gray-700' : 'border-gray-300'
+            state.darkMode ? 'border-gray-500' : 'border-gray-300'
           }`} />
         </div>
       </div>
