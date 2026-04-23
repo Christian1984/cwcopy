@@ -227,7 +227,7 @@ describe('reducer', () => {
     });
 
     it('initialState has the default cooldown', () => {
-      expect(initialState.cooldownS).toBe(0.05);
+      expect(initialState.cooldownS).toBe(0.5);
     });
   });
 });

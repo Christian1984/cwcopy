@@ -9,7 +9,7 @@ export const STORAGE_KEY = 'cwcopy-session';
 export const PREFS_KEY = 'cwcopy-prefs';
 
 /** Default cooldown in seconds before a lifted stroke is captured as a letter. */
-export const COOLDOWN_DEFAULT_S = 0.05;
+export const COOLDOWN_DEFAULT_S = 0.5;
 
 /** Padding (px) added around the bounding box when cropping a letter image. */
 export const CANVAS_CROP_PADDING = 8;
