@@ -1,15 +1,13 @@
 import { useApp } from '../state/AppContext';
+import { theme } from '../theme';
 
 export function NavBar() {
   const { state, dispatch } = useApp();
+  const t = state.darkMode ? theme.dark : theme.light;
 
   return (
     <nav
-      className={`flex items-center justify-between px-4 py-3 border-b shrink-0 ${
-        state.darkMode
-          ? 'bg-gray-900 border-gray-500 text-gray-400'
-          : 'bg-amber-50 border-gray-800 text-gray-900'
-      }`}
+      className={`flex items-center justify-between px-4 py-3 border-b shrink-0 ${t.surface} ${t.border} ${t.titleText}`}
     >
       <div className="flex items-center gap-2">
         <a
@@ -33,16 +31,10 @@ export function NavBar() {
           aria-checked={state.darkMode}
           aria-label="Toggle dark mode"
           onClick={() => dispatch({ type: 'TOGGLE_DARK_MODE' })}
-          className={`relative inline-flex h-7 w-12 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
-            state.darkMode
-              ? 'bg-gray-600 focus-visible:ring-gray-500'
-              : 'bg-gray-300 focus-visible:ring-gray-400'
-          }`}
+          className={`relative inline-flex h-7 w-12 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.toggleTrack} focus-visible:${t.toggleFocusRing}`}
         >
           <span
-            className={`absolute top-0.5 h-6 w-6 rounded-full shadow transition-transform ${
-              state.darkMode ? 'translate-x-5 bg-gray-400' : 'translate-x-0.5 bg-white'
-            }`}
+            className={`absolute top-0.5 h-6 w-6 rounded-full shadow transition-transform ${t.toggleDot} ${state.darkMode ? 'translate-x-5' : 'translate-x-0.5'}`}
           />
           <span className="sr-only">{state.darkMode ? 'Dark mode on' : 'Light mode on'}</span>
         </button>

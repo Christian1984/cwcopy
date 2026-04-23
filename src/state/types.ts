@@ -36,4 +36,6 @@ export interface AppState {
   /** Non-null when the app loaded with a saved session and hasn't asked the
    *  user whether to resume or start over yet. */
   resumePrompt: SavedSession | null;
+  /** Seconds to wait after the last stroke before auto-capturing a letter. */
+  cooldownS: number;
 }

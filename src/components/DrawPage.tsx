@@ -1,10 +1,16 @@
-import { useRef, useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { useApp } from '../state/AppContext';
 import { useDrawing } from '../hooks/useDrawing';
 import { useDebounce } from '../hooks/useDebounce';
 import { captureLetterImage, clearCanvas } from '../utils/canvas';
-import { LETTER_SAVE_DELAY_MS, BASELINE_FRACTION } from '../constants';
+import { BASELINE_FRACTION } from '../constants';
+import { theme, hex } from '../theme';
 import { ControlBar } from './ControlBar';
+import { StyledSlider } from './StyledSlider';
+
+const DELAY_MIN = 0;
+const DELAY_MAX = 1.0;
+const DELAY_STEP = 0.05;
 
 export function DrawPage() {
   const { state, dispatch } = useApp();
@@ -21,11 +27,14 @@ export function DrawPage() {
 
   const { trigger: triggerDebounce, cancel: cancelDebounce } = useDebounce(
     saveAndClear,
-    LETTER_SAVE_DELAY_MS,
+    state.cooldownS * 1000,
   );
 
+  const t = state.darkMode ? theme.dark : theme.light;
+  const h = state.darkMode ? hex.dark : hex.light;
+
   useDrawing(canvasRef, {
-    strokeColor: state.darkMode ? '#9ca3af' : '#1a1a1a',
+    strokeColor: h.stroke,
     strokeWidth: 3,
     onStrokeStart: cancelDebounce,
     onStrokeEnd: triggerDebounce,
@@ -53,22 +62,28 @@ export function DrawPage() {
       <div className="flex-1 relative min-h-0 overflow-hidden">
         <canvas
           ref={canvasRef}
-          className={`absolute inset-0 w-full h-full touch-none cursor-crosshair ${
-            state.darkMode ? 'bg-black' : 'bg-amber-50'
-          }`}
+          className={`absolute inset-0 w-full h-full touch-none cursor-crosshair ${t.canvas}`}
         />
         {/* Baseline — ascenders above, descenders below */}
         <div
           className="absolute left-0 right-0 pointer-events-none"
           style={{ top: `${BASELINE_FRACTION * 100}%` }}
         >
-          <div
-            className={`border-t border-dashed ${
-              state.darkMode ? 'border-gray-500' : 'border-gray-300'
-            }`}
-          />
+          <div className={`border-t border-dashed ${t.baselineBorder}`} />
         </div>
       </div>
+
+      {/* Cooldown slider — above buttons */}
+      <StyledSlider
+        label="Cooldown"
+        min={DELAY_MIN}
+        max={DELAY_MAX}
+        step={DELAY_STEP}
+        value={state.cooldownS}
+        onChange={(v) => dispatch({ type: 'SET_COOLDOWN', payload: v })}
+        formatValue={(v) => `${v.toFixed(2)}s`}
+        darkMode={state.darkMode}
+      />
 
       <ControlBar
         buttons={[

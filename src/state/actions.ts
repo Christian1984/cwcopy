@@ -16,4 +16,6 @@ export type Action =
   /** User chose "Resume" on the reload dialog. */
   | { type: 'RESUME_SESSION'; payload: SavedSession }
   /** User chose "Start over" on the reload dialog. */
-  | { type: 'DISMISS_RESUME_PROMPT' };
+  | { type: 'DISMISS_RESUME_PROMPT' }
+  /** Cooldown slider changed. */
+  | { type: 'SET_COOLDOWN'; payload: number };

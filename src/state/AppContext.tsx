@@ -2,7 +2,7 @@ import { createContext, useContext, useReducer, useEffect, type ReactNode } from
 import { reducer, initialState } from './reducer';
 import type { AppState } from './types';
 import type { Action } from './actions';
-import { loadSession, saveSession } from '../utils/storage';
+import { loadSession, saveSession, loadPrefs, savePrefs } from '../utils/storage';
 
 interface AppContextValue {
   state: AppState;
@@ -14,11 +14,13 @@ export const AppContext = createContext<AppContextValue | null>(null);
 
 /** Runs once on first render to hydrate initial state from localStorage. */
 function init(base: AppState): AppState {
+  const prefs = loadPrefs();
+  const state = prefs ? { ...base, cooldownS: prefs.cooldownS } : base;
   const saved = loadSession();
   if (saved && (saved.words.length > 0 || saved.currentLetters.length > 0)) {
-    return { ...base, resumePrompt: saved };
+    return { ...state, resumePrompt: saved };
   }
-  return base;
+  return state;
 }
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -28,6 +30,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     saveSession({ currentLetters: state.currentLetters, words: state.words });
   }, [state.currentLetters, state.words]);
+
+  // Persist preferences (survive session clear) whenever they change.
+  useEffect(() => {
+    savePrefs({ cooldownS: state.cooldownS });
+  }, [state.cooldownS]);
 
   return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>;
 }

@@ -1,4 +1,5 @@
 import { useApp } from '../state/AppContext';
+import { theme, buttonVariants } from '../theme';
 
 export type ButtonVariant = 'primary' | 'confirm' | 'secondary' | 'danger';
 
@@ -12,36 +13,15 @@ interface Props {
   buttons: BarButtonDef[];
 }
 
-const VARIANTS: Record<ButtonVariant, { dark: string; light: string }> = {
-  primary: {
-    dark: 'bg-blue-950 hover:bg-blue-900 text-gray-400',
-    light: 'bg-blue-600 hover:bg-blue-500 text-white',
-  },
-  confirm: {
-    dark: 'bg-emerald-950 hover:bg-emerald-900 text-gray-400',
-    light: 'bg-emerald-600 hover:bg-emerald-500 text-white',
-  },
-  secondary: {
-    dark: 'bg-gray-800 hover:bg-gray-700 text-gray-400',
-    light: 'bg-gray-200 hover:bg-gray-300 text-gray-800',
-  },
-  danger: {
-    dark: 'bg-red-950 hover:bg-red-900 text-gray-400',
-    light: 'bg-red-100 hover:bg-red-200 text-red-800',
-  },
-};
 
 export function ControlBar({ buttons }: Props) {
   const { state } = useApp();
+  const t = state.darkMode ? theme.dark : theme.light;
 
   return (
-    <div
-      className={`flex gap-4 px-4 py-4 shrink-0 border-t ${
-        state.darkMode ? 'bg-gray-900 border-gray-500' : 'bg-amber-50 border-gray-800'
-      }`}
-    >
+    <div className={`flex gap-4 px-4 py-4 shrink-0 border-t ${t.surface} ${t.border}`}>
       {buttons.map((btn) => {
-        const colors = VARIANTS[btn.variant];
+        const colors = buttonVariants[btn.variant];
         return (
           <button
             key={btn.label}

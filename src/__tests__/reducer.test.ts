@@ -183,4 +183,51 @@ describe('reducer', () => {
       expect(next.resumePrompt).toBeNull();
     });
   });
+
+  // ── SET_COOLDOWN ───────────────────────────────────────────────────────────
+  describe('SET_COOLDOWN', () => {
+    it('updates cooldownS', () => {
+      const next = reducer(initialState, { type: 'SET_COOLDOWN', payload: 0.5 });
+      expect(next.cooldownS).toBe(0.5);
+    });
+
+    it('does not mutate other state fields', () => {
+      const state: AppState = { ...initialState, darkMode: true };
+      const next = reducer(state, { type: 'SET_COOLDOWN', payload: 0.3 });
+      expect(next.darkMode).toBe(true);
+      expect(next.words).toBe(state.words);
+    });
+  });
+
+  // ── cooldownS preservation ─────────────────────────────────────────────────
+  describe('cooldownS preservation', () => {
+    it('CLEAR_ALL does not reset cooldownS', () => {
+      const state: AppState = { ...initialState, cooldownS: 0.7 };
+      const next = reducer(state, { type: 'CLEAR_ALL' });
+      expect(next.cooldownS).toBe(0.7);
+    });
+
+    it('RESUME_SESSION does not reset cooldownS', () => {
+      const state: AppState = { ...initialState, cooldownS: 0.8 };
+      const next = reducer(state, {
+        type: 'RESUME_SESSION',
+        payload: { words: [], currentLetters: [] },
+      });
+      expect(next.cooldownS).toBe(0.8);
+    });
+
+    it('DISMISS_RESUME_PROMPT does not reset cooldownS', () => {
+      const state: AppState = {
+        ...initialState,
+        cooldownS: 0.6,
+        resumePrompt: { words: [], currentLetters: [] },
+      };
+      const next = reducer(state, { type: 'DISMISS_RESUME_PROMPT' });
+      expect(next.cooldownS).toBe(0.6);
+    });
+
+    it('initialState has the default cooldown', () => {
+      expect(initialState.cooldownS).toBe(0.05);
+    });
+  });
 });

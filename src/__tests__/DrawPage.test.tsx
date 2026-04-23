@@ -100,4 +100,30 @@ describe('DrawPage', () => {
     const canvas = document.querySelector('canvas')!;
     expect(canvas.className).toMatch(/bg-amber-50/);
   });
+
+  it('renders a cooldown slider', () => {
+    renderDrawPage();
+    expect(screen.getByRole('slider', { name: /cooldown/i })).toBeInTheDocument();
+  });
+
+  it('cooldown slider reflects state.cooldownS', () => {
+    renderDrawPage({ cooldownS: 0.3 });
+    const slider = screen.getByRole('slider', { name: /cooldown/i });
+    expect(slider).toHaveAttribute('value', '0.3');
+  });
+
+  it('cooldown slider dispatches SET_COOLDOWN on change', () => {
+    const { dispatch } = renderDrawPage({ cooldownS: 0.05 });
+    const slider = screen.getByRole('slider', { name: /cooldown/i });
+    fireEvent.change(slider, { target: { value: '0.5' } });
+    expect(dispatch).toHaveBeenCalledWith({ type: 'SET_COOLDOWN', payload: 0.5 });
+  });
+
+  it('cooldown slider has correct min/max/step attributes', () => {
+    renderDrawPage();
+    const slider = screen.getByRole('slider', { name: /cooldown/i });
+    expect(slider).toHaveAttribute('min', '0');
+    expect(slider).toHaveAttribute('max', '1');
+    expect(slider).toHaveAttribute('step', '0.05');
+  });
 });

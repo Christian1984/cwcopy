@@ -1,5 +1,6 @@
 import type { AppState } from './types';
 import type { Action } from './actions';
+import { COOLDOWN_DEFAULT_S } from '../constants';
 
 const prefersDark =
   typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches;
@@ -10,6 +11,7 @@ export const initialState: AppState = {
   words: [],
   darkMode: prefersDark,
   resumePrompt: null,
+  cooldownS: COOLDOWN_DEFAULT_S,
 };
 
 export function reducer(state: AppState, action: Action): AppState {
@@ -56,6 +58,9 @@ export function reducer(state: AppState, action: Action): AppState {
 
     case 'DISMISS_RESUME_PROMPT':
       return { ...state, resumePrompt: null };
+
+    case 'SET_COOLDOWN':
+      return { ...state, cooldownS: action.payload };
 
     default:
       return state;
