@@ -3,7 +3,8 @@ import { useApp } from '../state/AppContext';
 import { useDrawing } from '../hooks/useDrawing';
 import { useDebounce } from '../hooks/useDebounce';
 import { captureLetterImage, clearCanvas } from '../utils/canvas';
-import { LETTER_SAVE_DELAY_MS } from '../constants';
+import { LETTER_SAVE_DELAY_MS, BASELINE_FRACTION } from '../constants';
+import { ControlBar } from './ControlBar';
 
 export function DrawPage() {
   const { state, dispatch } = useApp();
@@ -24,7 +25,7 @@ export function DrawPage() {
   );
 
   useDrawing(canvasRef, {
-    strokeColor: state.darkMode ? '#ffffff' : '#1a1a1a',
+    strokeColor: state.darkMode ? '#9ca3af' : '#1a1a1a',
     strokeWidth: 3,
     onStrokeStart: cancelDebounce,
     onStrokeEnd: triggerDebounce,
@@ -47,40 +48,30 @@ export function DrawPage() {
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
-      <canvas
-        ref={canvasRef}
-        className={`flex-1 w-full touch-none cursor-crosshair ${
-          state.darkMode ? 'bg-black' : 'bg-white'
-        }`}
-      />
-
-      <div className={`flex gap-4 justify-center px-4 py-4 shrink-0 border-t ${
-        state.darkMode
-          ? 'bg-gray-900 border-gray-700'
-          : 'bg-gray-50 border-gray-200'
-      }`}>
-        <button
-          onClick={handleSpace}
-          className={`flex-1 max-w-xs py-4 rounded-2xl text-lg font-medium transition-colors active:scale-95 ${
-            state.darkMode
-              ? 'bg-blue-700 hover:bg-blue-600 text-white'
-              : 'bg-blue-600 hover:bg-blue-500 text-white'
+      {/* Canvas + baseline overlay. The line is CSS-only — it never touches
+          canvas pixel data and will not appear in captured letter images. */}
+      <div className="flex-1 relative min-h-0 overflow-hidden">
+        <canvas
+          ref={canvasRef}
+          className={`absolute inset-0 w-full h-full touch-none cursor-crosshair ${
+            state.darkMode ? 'bg-black' : 'bg-amber-50'
           }`}
+        />
+        {/* Baseline — ascenders above, descenders below */}
+        <div
+          className="absolute left-0 right-0 pointer-events-none"
+          style={{ top: `${BASELINE_FRACTION * 100}%` }}
         >
-          Space
-        </button>
-
-        <button
-          onClick={handleResults}
-          className={`flex-1 max-w-xs py-4 rounded-2xl text-lg font-medium transition-colors active:scale-95 ${
-            state.darkMode
-              ? 'bg-emerald-700 hover:bg-emerald-600 text-white'
-              : 'bg-emerald-600 hover:bg-emerald-500 text-white'
-          }`}
-        >
-          Results
-        </button>
+          <div className={`border-t border-dashed ${
+            state.darkMode ? 'border-gray-700' : 'border-gray-300'
+          }`} />
+        </div>
       </div>
+
+      <ControlBar buttons={[
+        { label: 'Space',   onClick: handleSpace,   variant: 'primary'  },
+        { label: 'Results', onClick: handleResults, variant: 'confirm'  },
+      ]} />
     </div>
   );
 }

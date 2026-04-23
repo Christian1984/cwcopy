@@ -104,6 +104,6 @@ describe('DrawPage', () => {
   it('uses a light canvas background in light mode', () => {
     renderDrawPage({ darkMode: false });
     const canvas = document.querySelector('canvas')!;
-    expect(canvas.className).toMatch(/bg-white/);
+    expect(canvas.className).toMatch(/bg-amber-50/);
   });
 });

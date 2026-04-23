@@ -13,6 +13,9 @@ export const mockCanvasContext = {
   fillRect: jest.fn(),
   drawImage: jest.fn(),
   scale: jest.fn(),
+  save: jest.fn(),
+  restore: jest.fn(),
+  setTransform: jest.fn(),
   getImageData: jest.fn(() => ({
     // 300×600 all-transparent pixels by default (nothing drawn)
     data: new Uint8ClampedArray(300 * 600 * 4),

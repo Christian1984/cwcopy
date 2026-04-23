@@ -1,11 +1,15 @@
 import type { AppState } from './types';
 import type { Action } from './actions';
 
+const prefersDark =
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+
 export const initialState: AppState = {
   view: 'draw',
   currentLetters: [],
   words: [],
-  darkMode: true,
+  darkMode: prefersDark,
   resumePrompt: null,
 };
 

@@ -56,7 +56,7 @@ describe('clearCanvas', () => {
     canvas.width = 300;
     canvas.height = 600;
     clearCanvas(canvas);
-    const ctx = (global as Record<string, unknown>).mockCanvasContext as { clearRect: jest.Mock };
+    const ctx = (globalThis as Record<string, unknown>).mockCanvasContext as { clearRect: jest.Mock };
     expect(ctx.clearRect).toHaveBeenCalledWith(0, 0, 300, 600);
   });
 
@@ -93,7 +93,7 @@ describe('captureLetterImage', () => {
     const i = (10 * 300 + 10) * 4;
     data[i] = 255; data[i + 1] = 255; data[i + 2] = 255; data[i + 3] = 255;
 
-    const ctx = (global as Record<string, unknown>).mockCanvasContext as {
+    const ctx = (globalThis as Record<string, unknown>).mockCanvasContext as {
       getImageData: jest.Mock;
     };
     ctx.getImageData.mockReturnValueOnce({ data, width: 300, height: 600, colorSpace: 'srgb' });
@@ -104,6 +104,9 @@ describe('captureLetterImage', () => {
       id: expect.any(String),
       dataUrl: expect.stringContaining('data:image/png'),
       capturedAt: expect.any(Number),
+      pxWidth: expect.any(Number),
+      pxHeight: expect.any(Number),
+      baselineOffset: expect.any(Number),
     });
   });
 
@@ -122,7 +125,7 @@ describe('captureLetterImage', () => {
     const i = (10 * 300 + 10) * 4;
     data[i] = 255; data[i + 1] = 255; data[i + 2] = 255; data[i + 3] = 255;
 
-    const ctx = (global as Record<string, unknown>).mockCanvasContext as {
+    const ctx = (globalThis as Record<string, unknown>).mockCanvasContext as {
       getImageData: jest.Mock;
       fillRect: jest.Mock;
     };

@@ -7,3 +7,10 @@ export const STORAGE_KEY = 'cw-notepad-session';
 
 /** Padding (px) added around the bounding box when cropping a letter image. */
 export const CANVAS_CROP_PADDING = 8;
+
+/**
+ * Vertical position of the baseline as a fraction of the canvas height.
+ * Used both for the CSS reference line overlay and to record where the
+ * baseline falls inside each captured letter image.
+ */
+export const BASELINE_FRACTION = 0.62;

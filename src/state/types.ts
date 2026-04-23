@@ -2,6 +2,15 @@ export interface LetterImage {
   id: string;
   dataUrl: string;
   capturedAt: number;
+  /** Pixel dimensions of the captured (cropped) PNG. */
+  pxWidth?: number;
+  pxHeight?: number;
+  /**
+   * Distance in device pixels from the top of the cropped image to the
+   * baseline. Used in the results view to align letters on their shared
+   * writing line rather than on their bounding-box edges.
+   */
+  baselineOffset?: number;
 }
 
 export interface Word {

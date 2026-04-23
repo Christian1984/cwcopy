@@ -9,7 +9,7 @@ export function App() {
 
   return (
     <div className={`flex flex-col h-screen overflow-hidden ${
-      state.darkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
+      state.darkMode ? 'bg-gray-900 text-gray-100' : 'bg-amber-50 text-gray-900'
     }`}>
       <NavBar />
 

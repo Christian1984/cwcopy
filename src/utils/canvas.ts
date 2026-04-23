@@ -1,4 +1,4 @@
-import { CANVAS_CROP_PADDING } from '../constants';
+import { CANVAS_CROP_PADDING, BASELINE_FRACTION } from '../constants';
 import type { LetterImage } from '../state/types';
 
 export interface BoundingBox {
@@ -58,6 +58,15 @@ export function captureLetterImage(canvas: HTMLCanvasElement): LetterImage | nul
   const cropW = bbox.maxX - bbox.minX + 1 + CANVAS_CROP_PADDING * 2;
   const cropH = bbox.maxY - bbox.minY + 1 + CANVAS_CROP_PADDING * 2;
 
+  // Where the baseline sits in the cropped image (device pixels from top).
+  // canvas.height is the device-pixel buffer height (CSS height × devicePixelRatio),
+  // matching the same scale as bbox coordinates.
+  const baselineDeviceY = Math.round(canvas.height * BASELINE_FRACTION);
+  const baselineOffset = Math.max(
+    0,
+    Math.min(cropH, baselineDeviceY - bbox.minY + CANVAS_CROP_PADDING),
+  );
+
   const offscreen = document.createElement('canvas');
   offscreen.width = cropW;
   offscreen.height = cropH;
@@ -81,6 +90,9 @@ export function captureLetterImage(canvas: HTMLCanvasElement): LetterImage | nul
     id: crypto.randomUUID(),
     dataUrl: offscreen.toDataURL('image/png'),
     capturedAt: Date.now(),
+    pxWidth: cropW,
+    pxHeight: cropH,
+    baselineOffset,
   };
 }
 
@@ -88,5 +100,10 @@ export function captureLetterImage(canvas: HTMLCanvasElement): LetterImage | nul
 export function clearCanvas(canvas: HTMLCanvasElement): void {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
+  // Reset to identity transform before clearing so we always clear the full
+  // device-pixel buffer regardless of whatever scale is currently applied.
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
 }
