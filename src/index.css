@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+/* Prevent pull-to-refresh and other default touch behaviours on the draw page. */
+html,
+body {
+  overscroll-behavior: none;
+  touch-action: pan-x pan-y;
+}

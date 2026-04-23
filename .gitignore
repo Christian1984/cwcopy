@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Test output
+coverage/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# npm lockfile — project uses pnpm, commit pnpm-lock.yaml instead
+package-lock.json
