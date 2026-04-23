@@ -43,6 +43,8 @@ export const theme = {
 
 export const hex = {
   dark: {
+    /** Main surface — matches bg-gray-900 */
+    surface: '#111827',
     /** Canvas stroke color */
     stroke: '#9ca3af',
     /** Slider filled-track / thumb color */
@@ -51,6 +53,8 @@ export const hex = {
     sliderTrack: '#374151',
   },
   light: {
+    /** Main surface — matches bg-amber-50 */
+    surface: '#fffbeb',
     stroke: '#1a1a1a',
     sliderThumb: '#2563eb',
     sliderTrack: '#e5e7eb',

@@ -7,6 +7,12 @@ body {
   touch-action: pan-x pan-y;
 }
 
+/* Pad an element by the iOS/Android safe-area top inset (Dynamic Island, notch, etc.).
+   Used on the NavBar so its background colour extends behind the status bar. */
+@utility safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
 /* ── Range slider ─────────────────────────────────────────────────────────────
    Removes native appearance so we can colour the passive track separately.
    Active / passive colours and the split position are passed via inline CSS

@@ -7,7 +7,7 @@ export function NavBar() {
 
   return (
     <nav
-      className={`flex items-center justify-between px-4 py-3 border-b shrink-0 ${t.surface} ${t.border} ${t.titleText}`}
+      className={`flex items-center justify-between px-4 pb-3 border-b shrink-0 safe-top ${t.surface} ${t.border} ${t.titleText}`}
     >
       <div className="flex items-center gap-2">
         <a

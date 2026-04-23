@@ -3,6 +3,7 @@ import { reducer, initialState } from './reducer';
 import type { AppState } from './types';
 import type { Action } from './actions';
 import { loadSession, saveSession, loadPrefs, savePrefs } from '../utils/storage';
+import { hex } from '../theme';
 
 interface AppContextValue {
   state: AppState;
@@ -35,6 +36,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     savePrefs({ cooldownS: state.cooldownS });
   }, [state.cooldownS]);
+
+  // Keep the browser/OS status-bar colour in sync with the app theme.
+  useEffect(() => {
+    const color = state.darkMode ? hex.dark.surface : hex.light.surface;
+    document.querySelectorAll('meta[name="theme-color"]').forEach((el) => {
+      el.setAttribute('content', color);
+    });
+  }, [state.darkMode]);
 
   return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>;
 }
