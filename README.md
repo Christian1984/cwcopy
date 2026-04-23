@@ -48,3 +48,17 @@ docker run -p 8080:80 cwcopy
 ## CI/CD
 
 GitHub Actions runs lint → type-check → tests on every push and PR. On a passing push to `main`, the Docker image is built and pushed to `ghcr.io/<owner>/cwcopy:latest`.
+
+## Deploying with Cloudflare Tunnel
+
+A `docker-compose.yml` is included for self-hosting behind a [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) (no open inbound ports required).
+
+1. Create a tunnel at **dash.cloudflare.com → Zero Trust → Networks → Tunnels** and copy the token
+2. Configure a public hostname in the tunnel pointing to `http://app:80`
+3. On your server:
+
+```bash
+echo "CLOUDFLARE_TUNNEL_TOKEN=your_token_here" > .env
+docker compose pull
+docker compose up -d
+```
