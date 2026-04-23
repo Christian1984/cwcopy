@@ -21,7 +21,7 @@ export function NavBar() {
         >
           ☕
         </a>
-        <span className="text-base font-semibold tracking-wide">CW Notepad</span>
+        <span className="text-base font-semibold tracking-wide">cwcopy</span>
       </div>
 
       <div className="flex items-center gap-2">

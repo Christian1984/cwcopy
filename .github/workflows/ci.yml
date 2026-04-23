@@ -9,7 +9,7 @@ on:
 jobs:
   # ── Job 1: lint, type-check, test ─────────────────────────────────────────
   test:
-    name: Type-check & Test
+    name: Lint, Type-check & Test
     runs-on: ubuntu-latest
 
     steps:
@@ -26,6 +26,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
 
       - name: Type check
         run: pnpm exec tsc --noEmit

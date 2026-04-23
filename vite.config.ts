@@ -10,9 +10,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'CW Notepad',
-        short_name: 'CW Notepad',
-        description: 'Morse code handwriting practice notepad',
+        name: 'cwcopy',
+        short_name: 'cwcopy',
+        description: 'Finger-drawn Morse code practice notepad',
         theme_color: '#1e3a8a',
         background_color: '#111827',
         display: 'standalone',
